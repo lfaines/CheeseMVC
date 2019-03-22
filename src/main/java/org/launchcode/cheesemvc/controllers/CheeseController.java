@@ -1,5 +1,6 @@
 package org.launchcode.cheesemvc.controllers;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+
+import org.launchcode.cheesemvc.models.Cheese;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,8 @@ import java.util.ArrayList;
 @RequestMapping("cheese")
 public class CheeseController {
 
-    static  ArrayList<String> cheeses = new ArrayList<>();
+    static ArrayList<Cheese> cheeses = new ArrayList<>();
+    //static HashMap<String, String> cheeses = new HashMap<>();
 
     //Request path: /cheese
     @RequestMapping(value = "")
@@ -23,17 +25,46 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
-    public String displayAddCheesseForm(Model model) {
+    public String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
+       // model.addAttribute("title", "Add Description");
         return "cheese/add";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String processAddCheeseForm(@RequestParam String cheeseName) {
-        cheeses.add(cheeseName);
-        //Redire t to /cheese
+    public String processAddCheeseForm(@RequestParam String cheeseName, @RequestParam String cheeseDescription) {
+        Cheese cheese = new Cheese(cheeseName, cheeseDescription);
+        cheeses.add(cheese);
+
+        //cheeses.put(cheeseName, cheeseDescription);
+
+        //cheeses.put(cheeseDescription);
+        //Redirect to /cheese
         return "redirect:";
 
     }
+
+    @RequestMapping(value = "delete", method = RequestMethod.GET)
+    public String displayDeleteCheeseForm(Model model) {
+        model.addAttribute("cheeses", cheeses);
+        model.addAttribute("title", "Delete Cheese");
+        return "cheese/delete";
+    }
+
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    public String processDeleteCheeseForm(@RequestParam ArrayList<Integer> cheeseIds) {
+        for (Integer cheeseId : cheeseIds) {
+            for (Cheese cheese: cheeses) {
+                if (cheese.getId() == cheeseId) {
+                    cheeses.remove(cheese);
+                    break;
+                }
+            }
+        }
+        return "redirect:";
+    }
+
+
+
 
 }
