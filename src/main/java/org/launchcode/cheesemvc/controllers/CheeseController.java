@@ -2,13 +2,11 @@ package org.launchcode.cheesemvc.controllers;
 
 import org.launchcode.cheesemvc.models.Cheese;
 import org.launchcode.cheesemvc.models.CheeseData;
+import org.launchcode.cheesemvc.models.CheeseType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -33,6 +31,7 @@ public class CheeseController {
     public String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
         model.addAttribute(new Cheese()); //use properties of object to render form properly
+        model.addAttribute("cheeseTypes", CheeseType.values());
         return "cheese/add";
     }
 
@@ -60,6 +59,29 @@ public class CheeseController {
             CheeseData.remove(cheeseId);
         }
         return "redirect:";
+    }
+
+    //  TODO: Add functionality to GET /cheese/edit/{id}
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int cheeseId){
+
+        Cheese aCheese = CheeseData.getById(cheeseId);
+        model.addAttribute("title", "Edit Cheese " + aCheese.getName() + "(id=" + aCheese.getCheeseId()+ ")");
+        model.addAttribute("cheese", aCheese);
+        return "cheese/edit";
+    }
+
+    //  TODO: Add funtionality to POST /cheese/edit/{id}
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
+    public String processEditForm(
+            @PathVariable int cheeseId,
+            @RequestParam String name,
+            @RequestParam String description
+    ){
+        Cheese aCheese = CheeseData.getById(cheeseId);
+        aCheese.setName(name);
+        aCheese.setDescription(description);
+        return "redirect:/cheese";
     }
 
 }
