@@ -1,10 +1,20 @@
 package org.launchcode.cheesemvc.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
 public class Cheese {
-    //private int id;
+
+    @Id
+    @GeneratedValue
+    private int id;
+
+
     @NotNull
     @Size(min=3, max=15, message = "Name field must be between 3 and 15 characters.") //length of cheese name specified for validation
     private String name;
@@ -13,36 +23,20 @@ public class Cheese {
     @Size(min=3, max=25, message = "Description field must be between 3 and 25 characters.")
     private String description;
 
+    //private CheeseType type;
+    @ManyToOne
+    private Category category;
     private CheeseType type;
 
-    private int cheeseId;
-    //private static int nextId = 0;
-    private static int nextId = 1;
-
     public Cheese(String name, String description) {
-        //this.id = nextId;
-        this(); //call the default constructor for the given class
         this.name = name;
         this.description = description;
-        //nextId++;
     }
+    public Cheese() {}
 
-    public Cheese() {
-        cheeseId = nextId;
-        nextId++;
+    public int getId() {
+        return id;
     }
-
-    public int getCheeseId() {
-        return cheeseId;
-    }
-
-    public void setCheeseId(int cheeseId) {
-        this.cheeseId = cheeseId;
-    }
-
-    //public int getId() {
-      //  return id;
-    //}
 
     public String getName() {
         return name;
@@ -66,5 +60,13 @@ public class Cheese {
 
     public void setType(CheeseType type) {
         this.type = type;
+   }
+
+    public void setCategory(Category cat) {
+
     }
-}
+
+   // public String getCheeseId() {
+       // return null;
+    }
+//}
