@@ -17,27 +17,31 @@ public class Category {
     @Size(min = 3, max = 15, message = "Field cannot be left blank and must be between 3 and 15 characters.")
     private String name;
 
-    public Category(String name) {
-        this();
-        this.name = name;
-    }
-
-    public Category() {
-    }
-
     @OneToMany
     @JoinColumn(name = "category_id")
     private List<Cheese> cheeses = new ArrayList<>();
 
-    public String getName() {
-        return name;
+
+    public Category() {
     }
-    public void setName(String name) {
+
+    public Category(String name) {
         this.name = name;
     }
+
     public int getId() {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Cheese> getCheeses() {
+        return cheeses;
+    }
 }

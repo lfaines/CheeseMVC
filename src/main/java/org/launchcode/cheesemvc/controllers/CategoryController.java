@@ -20,6 +20,9 @@ public class CategoryController {
     @Autowired
     private CategoryDao categoryDao;
 
+    //@Autowired
+    //private CheeseDao cheeseDao;
+
 
     @RequestMapping(value = "")
     public String index(Model model) {
