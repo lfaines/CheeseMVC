@@ -7,6 +7,7 @@
 <h1 th:text="${title}">Default Title</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
+<br></br>
 
 <p th:unless="${cheeses} and ${cheeses.size()}">no cheese :(</p>
 
@@ -26,6 +27,15 @@
     </tr>
 
 </table>
+
+<ul>
+    <li th:each="categories : ${category}">
+        <a th:href="'/cheese/category/' + ${categories.id}" th:text="${categories.name}"></a>
+    </li>
+</ul>
+
+<a href= "/cheese/add">Add</a> |
+<a href = "/cheese/delete">Delete</a>
 
 </body>
 </html>

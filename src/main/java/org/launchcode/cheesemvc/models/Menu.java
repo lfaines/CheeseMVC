@@ -1,5 +1,6 @@
 package org.launchcode.cheesemvc.models;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -7,23 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Category {
+public class Menu {
 
     @Id
     @GeneratedValue
     private int id;
 
     @NotNull
-    @Size(min = 3, max = 15, message = "Field cannot be left blank and must be between 3 and 15 characters.")
+    @Size(min = 3, max = 15, message = "Must be between 3 and 15 characters.")
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "category_id")
+    @ManyToMany
     private List<Cheese> cheeses = new ArrayList<>();
 
-    public Category() { }
+    public Menu(String name) {
+        this.name = name;
+    }
 
-    public Category(String name) { this.name = name; }
+    public Menu() { }
+
+    public void addItem(Cheese item) { cheeses.add(item); }
+
+    //public Menu (String name) {this.name = name; }
 
     public int getId() {
         return id;
