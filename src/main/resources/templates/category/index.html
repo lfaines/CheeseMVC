@@ -11,7 +11,7 @@
 
 <ul>
     <li th:each="categories : ${category}">
-        <a th:href="'/cheese/category/' + ${categories.id}" th:text="${categories.name}"></a>
+        <a th:href="'/cheese/category?id=' + ${categories.id}" th:text="${categories.name}"></a>
     </li>
 </ul>
 
@@ -20,8 +20,3 @@
 </body>
 </html>
 
-
-<!--<a th:href="${'/edit-mentor/' + mentor.id}"/>-->
-<!--<a th:href="@{cheese/category + ${id}}"></a></li>-->
-<!--<a href="cheese/index.html" th:href="@{cheese/category/{id}}"></a>-->
-<!--<li th:each="categories : ${category}" th:text="${categories.name}"><a href="cheese/index.html" th:href="@{cheese/category/{id}}"></a></li>-->
